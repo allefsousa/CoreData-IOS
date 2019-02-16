@@ -18,14 +18,32 @@ class ViewController: UIViewController {
         // Fazendo refencia a classe app delegate que contem os metodos para manipular o banco de dadaos (Core Data)
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
-        let aa  = UIApplication.shared.delegate as! AppDelegate
-        let bb = aa.persistentContainer.viewContext
+        
+        // criando requisição para buscar os dados
+        let requisicao = NSFetchRequest<NSFetchRequestResult>(entityName: "Usuario")
+        do {
+            let usuarios = try context.fetch(requisicao)
+            if usuarios.count > 0{
+                
+                for usuario in usuarios as! [NSManagedObject]{
+                    if let nomeUsuario = usuario.value(forKey: "nome"){
+                        print(nomeUsuario)
+
+                    }
+                }
+                
+            }else{
+                print("Nenhum usuario encontrado")
+            }
+        } catch  {
+            print("Erro ao recuperar Usuario")
+        }
+        
         
         /*
          Criando Entidade
-         */
-        let user = NSEntityDescription.insertNewObject(forEntityName: "Usuario", into: bb)
-        _ = NSEntityDescription.insertNewObject(forEntityName: "Usuario",into:context)
+ 
+        let user = NSEntityDescription.insertNewObject(forEntityName: "Usuario",into:context)
         
         user.setValue("Bruna mendes", forKey: "nome")
         user.setValue(23, forKey: "idade")
@@ -41,6 +59,9 @@ class ViewController: UIViewController {
         } catch  {
             print("Erro ao salvar dados")
         }
+  */
+        
+        
     }
     
 
