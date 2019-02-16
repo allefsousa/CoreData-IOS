@@ -19,16 +19,40 @@ class ViewController: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         
-        // criando requisição para buscar os dados
-        let requisicao = NSFetchRequest<NSFetchRequestResult>(entityName: "Usuario")
+        
+        /*
+         SALVANDO PRODUTOS
+         */
+        let products = NSEntityDescription.insertNewObject(forEntityName: "Produto",into:context)
+        
+        products.setValue("Papel Higienico", forKey: "descricao")
+        products.setValue("Branco", forKey: "cor")
+        products.setValue(8.50, forKey: "preco")
+        
+        
         do {
-            let usuarios = try context.fetch(requisicao)
-            if usuarios.count > 0{
+            try context.save()
+            print("Os Dados Foram Salvos")
+            
+        } catch  {
+            print("Erro ao salvar dados")
+        }
+        
+        
+        
+        /*
+         LISTANDO PRODUTOS
+         */
+        
+        let requisicao = NSFetchRequest<NSFetchRequestResult>(entityName: "Produto")
+        do {
+            let prod = try context.fetch(requisicao)
+            if prod.count > 0{
                 
-                for usuario in usuarios as! [NSManagedObject]{
-                    if let nomeUsuario = usuario.value(forKey: "nome"){
-                        print(nomeUsuario)
-
+                for pro in prod as! [NSManagedObject]{
+                    if let descricaoProduto = pro.value(forKey: "descricao"){
+                        print(descricaoProduto)
+                        
                     }
                 }
                 
@@ -39,30 +63,13 @@ class ViewController: UIViewController {
             print("Erro ao recuperar Usuario")
         }
         
-        
-        /*
-         Criando Entidade
- 
-        let user = NSEntityDescription.insertNewObject(forEntityName: "Usuario",into:context)
-        
-        user.setValue("Bruna mendes", forKey: "nome")
-        user.setValue(23, forKey: "idade")
-        user.setValue("bruninhadorme@dorme.com", forKey: "login")
-        user.setValue("123455", forKey: "senha")
-        
-        //salvando
-        
-        do {
-            try context.save()
-            print("Os Dados Foram Salvos")
-
-        } catch  {
-            print("Erro ao salvar dados")
-        }
-  */
-        
-        
     }
+    
+ 
+        
+    
+    
+    
     
 
 
