@@ -59,7 +59,6 @@ class ViewController: UIViewController {
                 for pro in prod as! [NSManagedObject]{
                     if let descricaoProduto = pro.value(forKey: "descricao"){
                         print(descricaoProduto)
-                        
                     }
                 }
                 
@@ -69,8 +68,21 @@ class ViewController: UIViewController {
         } catch  {
             print("Erro ao recuperar Usuario")
         }
+        // deletando produto
+//
+//        do {
+//            try context.delete(descricaoProduto)
+//                print("Sucesso ao remover produto")
+//        } catch  {
+//                print("Erro ao remover produto")
+//
+//        }
         
     }
+    
+    
+    
+    
     
  
         
