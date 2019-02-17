@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         // ORDENANDO OS PRODUTOS
         
         let ordenacaoAZ = NSSortDescriptor(key: "descricao", ascending: true)
-        
+        let predicate = NSPredicate(format: "descricao contains %@", "Bolacha")
         
         
         
@@ -51,6 +51,7 @@ class ViewController: UIViewController {
         
         let requisicao = NSFetchRequest<NSFetchRequestResult>(entityName: "Produto")
         requisicao.sortDescriptors = [ordenacaoAZ]
+        requisicao.predicate = predicate
         do {
             let prod = try context.fetch(requisicao)
             if prod.count > 0{
