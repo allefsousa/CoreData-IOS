@@ -25,9 +25,9 @@ class ViewController: UIViewController {
          */
         let products = NSEntityDescription.insertNewObject(forEntityName: "Produto",into:context)
         
-        products.setValue("Papel Higienico", forKey: "descricao")
+        products.setValue("salgadinho", forKey: "descricao")
         products.setValue("Branco", forKey: "cor")
-        products.setValue(8.50, forKey: "preco")
+        products.setValue(5.00, forKey: "preco")
         
         
         do {
@@ -38,6 +38,11 @@ class ViewController: UIViewController {
             print("Erro ao salvar dados")
         }
         
+        // ORDENANDO OS PRODUTOS
+        
+        let ordenacaoAZ = NSSortDescriptor(key: "descricao", ascending: true)
+        
+        
         
         
         /*
@@ -45,6 +50,7 @@ class ViewController: UIViewController {
          */
         
         let requisicao = NSFetchRequest<NSFetchRequestResult>(entityName: "Produto")
+        requisicao.sortDescriptors = [ordenacaoAZ]
         do {
             let prod = try context.fetch(requisicao)
             if prod.count > 0{
